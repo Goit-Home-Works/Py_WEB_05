@@ -1,0 +1,23 @@
+{   'date': '01.12.2014', 
+    'bank': 'PB', 
+    'baseCurrency': 980, 
+    'baseCurrencyLit': 'UAH', 
+    'exchangeRate': [
+        {
+            'baseCurrency': 'UAH', 
+            'currency': 'AUD', 
+            'saleRateNB': 12.831925, 
+            'purchaseRateNB': 12.831925
+        },
+        {
+            'baseCurrency': 'UAH', 
+            'currency': 'CAD', 
+            'saleRateNB': 13.21074, 
+            'purchaseRateNB': 13.21074, 
+            'saleRate': 15.0, 
+            'purchaseRate': 13.0
+        }
+    ]
+}
+
+# Field Names: ['date', 'bank', 'baseCurrency','baseCurrencyLit', 'exchangeRate' :['baseCurrency', 'currency', 'saleRateNB', 'purchaseRateNB']]
