@@ -10,10 +10,10 @@ from typing import List
 
 class Data_exchange_pb:
     BASE_URL = 'https://api.privatbank.ua/p24api/exchange_rates?'
-    CURRENCIES = 'USD', 'EUR'
+    CURRENCIES = ()
 
     def json_to_text(self, obj):
-        filtered_currencies = list(filter(lambda x: x['currency'] in (Data_exchange_pb.CURRENCIES), obj['exchangeRate']))
+        filtered_currencies = list(filter(lambda x: x['currency'] in self.CURRENCIES, obj['exchangeRate']))
         formatted_currencies = [
             {obj['date']: {x['currency']: {'sale': x.get('saleRate'), 'purchase': x.get('purchaseRate')}}} for x in
             filtered_currencies]
@@ -58,6 +58,7 @@ class Data_exchange_pb:
         days = await self.get_days_list(days_num)
         print(days)
         data = await self.data_from_api(days)
+        results = []
         for day_data in data:
             result = self.json_to_text(day_data)
             print(result)
