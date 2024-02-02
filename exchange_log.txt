@@ -1,7 +1,0 @@
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
-Exchange command executed with currencies: EUR, USD, CAD
