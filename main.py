@@ -1,25 +1,24 @@
-import logging
-import sys
+import argparse
 import asyncio
 import aiohttp
-import json
-import aiofile
 from datetime import datetime, timedelta
-import argparse
+import json
+import logging
 from typing import List
 
 class Data_exchange_pb:
     BASE_URL = 'https://api.privatbank.ua/p24api/exchange_rates?'
     CURRENCIES = ()
 
-    def json_to_text(self, obj):
+    def format_obj(self, obj):
         filtered_currencies = list(filter(lambda x: x['currency'] in self.CURRENCIES, obj['exchangeRate']))
-        formatted_currencies = [
-            {obj['date']: {x['currency']: {'sale': x.get('saleRate'), 'purchase': x.get('purchaseRate')}}} for x in
-            filtered_currencies]
-        text = json.dumps(formatted_currencies, indent=4)
-        return text
-
+        formatted_currencies = {
+            obj['date']: {
+                x['currency']: {'sale': x.get('saleRate'), 'purchase': x.get('purchaseRate')}
+                for x in filtered_currencies
+            }
+        }
+        return formatted_currencies
     async def get_days_list(self, days_num: int) -> List[str]:
         today = datetime.now().date()
         dates = [(today - timedelta(days=i)).strftime('%d.%m.%Y') for i in range(days_num)]
@@ -41,7 +40,6 @@ class Data_exchange_pb:
         async with asyncio.TaskGroup() as tg:
             results = []
             for date in days:
-                print(date)
                 task = tg.create_task(self.fetch_api_pb(date))
                 results.append(await task)
             return results
@@ -54,14 +52,13 @@ class Data_exchange_pb:
 
         days_num = min(abs(args.days), 10)
         self.CURRENCIES = tuple(args.currencies.split(','))
-        print("HOHOHO ", self.CURRENCIES)
         days = await self.get_days_list(days_num)
-        print(days)
         data = await self.data_from_api(days)
         results = []
         for day_data in data:
-            result = self.json_to_text(day_data)
-            print(result)
+            result = self.format_obj(day_data)
+            results.append(result)
+        print(json.dumps(results, indent=2))
 
 if __name__ == '__main__':
     data = Data_exchange_pb()
