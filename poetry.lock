@@ -489,6 +489,16 @@ files = [
 ]
 
 [[package]]
+name = "names"
+version = "0.3.0"
+description = "Generate random names"
+optional = false
+python-versions = "*"
+files = [
+    {file = "names-0.3.0.tar.gz", hash = "sha256:726e46254f2ed03f1ffb5d941dae3bc67c35123941c29becd02d48d0caa2a671"},
+]
+
+[[package]]
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
@@ -712,4 +722,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<4"
-content-hash = "f39c0f0fe7a4b20837db904f642f18aaeeb99759809275d26e4aee9fd3a36ac3"
+content-hash = "cbf2f333853b98903907906e8963ca0ded96744de473c7c11bfb827f989c9cd0"

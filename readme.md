@@ -43,3 +43,43 @@ py .\main.py 2
 візьміть чат на веб-сокетах з лекційного матеріалу та додайте до нього можливість введення команди exchange. Вона показує користувачам поточний курс валют у текстовому форматі. Формат представлення виберіть на власний розсуд
 розширте додану команду exchange, щоб була можливість переглянути курс валют в чаті за останні кілька днів. Приклад exchange 2
 за допомогою пакетів aiofile та aiopath додайте логування до файлу, коли була виконана команда exchange у чаті
+
+## console 
+
+ # first part
+
+       python3 main.py 2 -c USD,EUR,PLN, GBR
+    or python3 main.py 2 --currencies USD,EUR,PLN,GBR
+
+ # extra task
+  
+
+
+## Docker
+
+docker build . -t siracencoserghei/my-python-app:0.0.1
+
+docker run -d \
+    --name HW-04 \
+    -p 3005:3005 \
+    -e SERVER_IP='0.0.0.0' \
+    -e SERVER_PORT=5005 \
+    -e BUFFER=1024 \
+    -v $(pwd)/storage:/app/storage \
+    siracencoserghei/my-python-app:0.0.1
+
+<!-- pwd це print  working directory візьме поточну діректорію де  викликано команду -->
+
+# digital ocean
+
+1. створення image
+   '''docker build . -t siracencoserghei/hw_5:0.0.1'''
+2. завантаження image в dockerhub
+   '''docker push siracencoserghei/hw_5:0.0.1'''
+3. скачування image з dockerhub
+  '''docker pull siracencoserghei/hw_5:0.0.1'''
+4. запускаемо docker container на  сервері
+   '''docker run -d \
+    --name HW-04 \
+    -p 3005:3005 \
+    siracencoserghei/hw_5:0.0.1'''

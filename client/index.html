@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <form id="formChat" class="form">
+      <input type="text" id="textField" />
+      <div>
+      <input type="checkbox" id="checkBox" />
+      <label for="checkBox">need exchange information?</label>
+      
+      </div>
+      <div class="checkboxes">
+
+      <p>Choose the currencies:</p>
+        <!-- 'EUR', 'USD', 'CHF', 'GBP', 'PLZ', 'SEK', 'CAD', 'XAU' -->
+      <span>
+        <input type="checkbox" id="USD" name="options" value="USD" />
+        <label for="USD">USD</label>
+        </span>
+        <span>
+        <input type="checkbox" id="EUR" name="options" value="EUR" />
+        <label for="EUR">EUR</label>
+        </span>
+        <span>
+        <input type="checkbox" id="CHF" name="options" value="CHF" />
+        <label for="CHF">CHF</label>
+        </span>
+        <span>
+        <input type="checkbox" id="GBP" name="options" value="GBP" />
+        <label for="GBP">GBP</label>
+        </span>
+        <span>
+        <input type="checkbox" id="PLZ" name="options" value="PLZ" />
+        <label for="PLZ">PLZ</label>
+        </span>
+        <span>
+        <input type="checkbox" id="SEK" name="options" value="SEK" />
+        <label for="SEK">SEK</label>
+        </span>
+        <span>
+          <input type="checkbox" id="CAD" name="options" value="CAD" />
+          <label for="CAD">CAD</label>
+        </span>
+        <span>
+          <input type="checkbox" id="XAU" name="options" value="XAU" />
+          <label for="XAU">XAU</label>
+        </span><div>
+          <p>For how much days? (max last 10 days)</p>
+          <p>DAYS: <span id="selectedDays">1</span></p>
+          <input type="range" min="1" max="10" value="1" step="1" onchange="showDate(this.value)" id="days" /><br />
+        </div>
+        </div>
+        <div id="additionalInfoText" class="additionalInfoText"></div>
+      <button type="submit" >Send message</button>
+    </form>
+    <div id="subscribe"></div>
+    <script src="index.js"></script>
+  </body>
+</html>
