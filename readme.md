@@ -55,9 +55,9 @@ py .\main.py 2
 
  # extra task
   
-  docker build . -t your-repo-name/your-image-name:version
+  python3 server.py
 
-  docker run -p 8081:8081 -p 8000:8000 your-repo-name/your-image-name
+  
 
 
 
@@ -70,6 +70,7 @@ py .\main.py 2
   '''docker pull siracencoserghei/hw_5:0.0.1'''
 4. запускаемо docker container на  сервері
    '''docker run -d \
-    --name HW-04 \
-    -p 3005:3005 \
-    siracencoserghei/hw_5:0.0.1'''
+    --name HW-05 \ 
+    -p 8081:8081 -p 8000:8000 \ 
+    siracencoserghei/hw_5:0.0.1
+'''

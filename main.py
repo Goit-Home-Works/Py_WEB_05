@@ -43,12 +43,16 @@ class Data_exchange_pb:
             logging.info(err)
 
     async def data_from_api(self, days: List[str]):  # days: List[str] - list of days '%d.%m.%Y'
-        async with asyncio.TaskGroup() as tg:
-            results = []
-            for date in days:
-                task = tg.create_task(self.fetch_api_pb(date))
-                results.append(await task)
-            return results
+        # async with asyncio.TaskGroup() as tg:
+        #     results = []
+        #     for date in days:
+        #         task = tg.create_task(self.fetch_api_pb(date))
+        #         results.append(await task)
+        #     return results
+        tasks = [self.fetch_api_pb(date) for date in days]
+        results = await asyncio.gather(*tasks)
+        return results
+
 
     async def get_data(self, days_list):
         data = await self.data_from_api(days_list)

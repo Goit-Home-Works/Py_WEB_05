@@ -1,7 +1,8 @@
-import aiofile
+import aiofiles
 from aiopath import AsyncPath
 import json
 import logging
+import datetime
 
 from main import Data_exchange_pb
 logging.basicConfig(level=logging.INFO)
@@ -18,8 +19,6 @@ class GetExchange:
             command, selected_days, selected_currencies = self.message.split()
 
             selected_days = int(selected_days)
-            print(type(selected_currencies))
-            print(selected_currencies)
 
             # Fetch exchange rates for specified days and currencies
             results = await self.data_exchange.main(selected_days, selected_currencies)
@@ -36,10 +35,11 @@ class GetExchange:
             print(exchange_data)
             log_file = AsyncPath("server_log.txt")
             if exchange_data:
-                await ws_handler.send(f"Exchange rates for {self.name}:\n")
+                await ws_handler.send(f"Exchange rates for me: ") # {self.name}:\n")
                 await ws_handler.send(json.dumps(exchange_data, indent=2))
-                async with aiofile.async_open(log_file, 'a') as f:
-                    await f.write(f"Exchange rates for {self.name}:\n{json.dumps(exchange_data, indent=2)}\n")
+                async with aiofiles.open(log_file, 'a') as f:
+                    await f.write(f"{datetime.datetime.now()} \n"
+                                  f"Exchange rates for {self.name}:\n{json.dumps(exchange_data, indent=2)}\n")
         except Exception as e:
             logging.error(f"Error in send_exchange: {e}")
- 
+  

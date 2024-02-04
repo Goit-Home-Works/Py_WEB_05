@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # chmod +x server.py
 
-import aiofile
+
+from aiofiles import open as aio_open
 import asyncio
+from faker import Faker
 import logging
 import websockets
 from aiopath import AsyncPath
-import names  #  fake names https://pypi.org/project/names/
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
 
 from extra import GetExchange
 
-
+fake = Faker('uk-UA')
 logging.basicConfig(level=logging.INFO)
 
 
@@ -23,11 +24,12 @@ class Server:
 
     async def register(self, ws: WebSocketServerProtocol):
         print(ws)
-        ws.name = names.get_full_name()
+        ws.name = fake.name()
         self.clients.add(ws)
         logging.info(f'{ws.remote_address} connects')
 
     async def unregister(self, ws: WebSocketServerProtocol):
+        # if ws in self.clients:
         self.clients.remove(ws)
         logging.info(f'{ws.remote_address} disconnects')
 
@@ -35,9 +37,9 @@ class Server:
         if self.clients:
             [await client.send(message) for client in self.clients if client != sender_ws]
         logging.info(message)
-        
-        async with aiofile.async_open(self.log_file, 'a') as f:
-            await f.write(f"{message}\n")
+
+        async with aio_open(self.log_file, 'a') as f:
+            await f.write(message + "\n")
 
     async def ws_handler(self, ws: WebSocketServerProtocol):
         reg = await self.register(ws)
@@ -49,21 +51,21 @@ class Server:
         finally:
             await self.unregister(ws)
 
-    async def send_exchange_rate(self, name, exchange_data):
-        result = await exchange_data.get_exchange()
-        print(result)
-        if result:
-            await self.send_to_clients(f"Exchange rate for: {name}", None)
-            await self.send_to_clients(f"{result}", None)
-        logging.info(result)
+    # async def send_exchange_rate(self, name, exchange_data):
+    #     result = await exchange_data.get_exchange()
+    #     print(result)
+    #     if result:
+    #         await self.send_to_clients(f"Exchange rate for: {name}", None)
+    #         await self.send_to_clients(f"{result}", None)
+    #     logging.info(result)
 
-    async def distribute(self, ws: WebSocketServerProtocol):
-        async for message in ws:
-            if message.lstrip().startswith("exchange"):
-                exchange_data = GetExchange(message, ws.name)
-                await exchange_data.send_exchange(ws)
-            else:
-                await self.send_to_clients(f"{ws.name}: {message}", ws)
+    # async def distribute(self, ws: WebSocketServerProtocol):
+    #     async for message in ws:
+    #         if message.lstrip().startswith("exchange"):
+    #             exchange_data = GetExchange(message, ws.name)
+    #             await exchange_data.send_exchange(ws)
+    #         else:
+    #             await self.send_to_clients(f"{ws.name}: {message}", ws)
 
 
 async def main():

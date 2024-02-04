@@ -28,7 +28,7 @@ formChat.addEventListener('submit', (e) => {
     }
 
     const elMsg = document.createElement('div');
-    elMsg.innerHTML = message;
+    elMsg.innerHTML = `Me: ${message}`;
     console.log(`Me: ${message}`);
     subscribe.appendChild(elMsg);
     ws.send(message);
