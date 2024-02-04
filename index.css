@@ -1,3 +1,8 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+
 
 input[type=text] {
   width: 300px;
@@ -22,7 +27,7 @@ button:hover{
 }
 
 #subscribe {
-  color: darkblue;
+    color: darkblue;
   font-size: 14px;
   margin-top: 20px;
 }

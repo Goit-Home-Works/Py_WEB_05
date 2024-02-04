@@ -1,6 +1,9 @@
-console.log('Hello world!')
+const WEB_SOCKET_URL = '0.0.0.0'
+const WEB_SOCKET_PORT = 8081
 
-const ws = new WebSocket('ws://localhost:8080');
+console.log('from console Hello world!')
+
+const ws = new WebSocket(`ws://${WEB_SOCKET_URL}:${WEB_SOCKET_PORT}`);
 
 const textField = document.getElementById('textField');
 const checkBox = document.getElementById('checkBox');
@@ -19,15 +22,16 @@ formChat.addEventListener('submit', (e) => {
         message = `exchange ${selectedDays} ${selectedCurrencies.join()}`;
     } else {
         input = textField.value.trim()
-        if  (!input) return alert("Please enter a message");
-        message = `Me: ${textField.value.trim()}`;
+        if (!input) return alert("Please enter a message");
+        message = textField.value.trim()
+        // message = `Me: ${textField.value.trim()}`;
     }
 
     const elMsg = document.createElement('div');
     elMsg.innerHTML = message;
-    console.log(message);
+    console.log(`Me: ${message}`);
     subscribe.appendChild(elMsg);
-    ws.send(textField.value.trim());
+    ws.send(message);
 
     textField.value = '';
 });

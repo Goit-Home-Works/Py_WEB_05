@@ -47,31 +47,21 @@ py .\main.py 2
 ## console 
 
  # first part
+      examples:
 
-       python3 main.py 2 -c USD,EUR,PLN, GBR
-    or python3 main.py 2 --currencies USD,EUR,PLN,GBR
+       python3 main.py 2 -c USD,EUR,PLN
+       or 
+       python3 main.py 2 --currencies USD,EUR,PLN
 
  # extra task
   
+  docker build . -t your-repo-name/your-image-name:version
+
+  docker run -p 8081:8081 -p 8000:8000 your-repo-name/your-image-name
+
 
 
 ## Docker
-
-docker build . -t siracencoserghei/my-python-app:0.0.1
-
-docker run -d \
-    --name HW-04 \
-    -p 3005:3005 \
-    -e SERVER_IP='0.0.0.0' \
-    -e SERVER_PORT=5005 \
-    -e BUFFER=1024 \
-    -v $(pwd)/storage:/app/storage \
-    siracencoserghei/my-python-app:0.0.1
-
-<!-- pwd це print  working directory візьме поточну діректорію де  викликано команду -->
-
-# digital ocean
-
 1. створення image
    '''docker build . -t siracencoserghei/hw_5:0.0.1'''
 2. завантаження image в dockerhub

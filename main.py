@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import asyncio
 import aiohttp
@@ -68,22 +70,24 @@ class Data_exchange_pb:
         results = await self.format_results(data)
         return results
 
-    async def main(self):
-        parser = argparse.ArgumentParser(description='Fetch exchange rates for specified days')
-        parser.add_argument('days', type=int, help='Number of days to fetch exchange rates')
-        parser.add_argument('--currencies', '-c', default='EUR,USD', help='Comma-separated list of currencies')
-        args = parser.parse_args()
-        days = args.days
-        currencies = args.currencies
+    async def main(self, days_num, currencies):
         self.CURRENCIES = tuple(currencies.split(','))
-        days_num = min(abs(days), 10)
         days_list = await self.get_days_list(days_num)
-        # days_list = ['01.12.2014', '01.12.2023']
-        results = await self.results_data( days_list, currencies)
+        results = await self.results_data(days_list, currencies)
+        return results
 
-        await self.print_results(results)
-
+async def main_print(days_num, currencies):
+    data = Data_exchange_pb()
+    results = await data.main(days_num, currencies)
+    await data.print_results(results)
 
 if __name__ == '__main__':
-    data = Data_exchange_pb()
-    asyncio.run(data.main())
+    parser = argparse.ArgumentParser(description='Fetch exchange rates for specified days')
+    parser.add_argument('days', type=int, help='Number of days to fetch exchange rates')
+    parser.add_argument('--currencies', '-c', default='EUR,USD', help='Comma-separated list of currencies')
+    args = parser.parse_args()
+    days = args.days
+    currencies = args.currencies
+    days_num = min(abs(days), 10)
+    
+    asyncio.run(main_print(days_num, currencies))

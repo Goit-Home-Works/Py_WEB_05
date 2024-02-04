@@ -5,5 +5,5 @@
     <option name="pathToExecutable" value="$USER_HOME$/.local/bin/black" />
     <option name="sdkName" value="Poetry (Py_WEB_05)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (Py_WEB_05)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (Py_WEB_05) (5)" project-jdk-type="Python SDK" />
 </project>
