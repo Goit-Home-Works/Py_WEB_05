@@ -15,7 +15,13 @@ from websockets.exceptions import ConnectionClosedOK
 from extra import GetExchange
 
 fake = Faker('uk-UA')
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s %(message)s',
+    level=logging.INFO,
+        handlers=[
+        logging.FileHandler("server_log.txt"),
+        logging.StreamHandler()
+    ])
 
 
 
@@ -45,9 +51,7 @@ class Server:
         except ConnectionClosedOK:
             pass
         finally:
-            pass
-            # if  ws in self.clients:
-            #     await self.unregister(ws)
+            await self.unregister(ws)
                 
 
 
@@ -56,8 +60,8 @@ class Server:
         if result:
             await self.send_to_clients(f"Exchange rate for: {name}", sender_ws=None)
             await self.send_to_clients(f"{result}", sender_ws=None)
-            
-        logging.info(result)
+            msg = f"Exchange rate for: {name} {result}"
+        logging.info(msg)
 
     async def distribute(self, ws: WebSocketServerProtocol):
         logging.info(ws.name)
@@ -65,30 +69,10 @@ class Server:
             if message.lstrip().startswith("exchange"):
                 exchange_data = GetExchange(message, ws.name)
                 await exchange_data.send_exchange(ws)
-                msg = f"{ws.name} {message}"
-                logging.info(msg)
-                self.log_message(msg)
             else:
                 msg = f"{ws.name}: {message}"
                 await self.send_to_clients(msg, sender_ws=ws)
-                logging.info(msg)
-                self.log_message(msg)
-            
-    # def configure_logging(self):
-    #     logging.basicConfig(
-    #         filename="server_log.txt",
-    #         level=logging.INFO,
-    #         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    #     )
 
-    # def log_message(self, message: str):
-    #     logging.info(message)
-
-    # async def log_message(self, message: str):
-    #     now = datetime.datetime.now()
-    #     async with aio_open(self.log_file, 'a') as f:
-    #         await f.write(f"{now} - {message}\n")
-  
 
 async def main():
     server = Server()
