@@ -17,6 +17,7 @@ async-timeout = "^4.0.3"
 aioredis = "^2.0.1"
 aiofiles = "^23.2.1"
 faker = "^22.6.0"
+aiologger = "^0.7.0"
 
 
 [build-system]

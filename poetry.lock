@@ -1,18 +1,4 @@
 [[package]]
-name = "aiofile"
-version = "3.8.8"
-description = "Asynchronous file operations."
-category = "main"
-optional = false
-python-versions = ">=3.7, <4"
-
-[package.dependencies]
-caio = ">=0.9.0,<0.10.0"
-
-[package.extras]
-develop = ["aiomisc-pytest", "pytest", "pytest-rst", "pytest-cov", "coveralls"]
-
-[[package]]
 name = "aiofiles"
 version = "23.2.1"
 description = "File support for asyncio."
@@ -37,6 +23,17 @@ yarl = ">=1.0,<2.0"
 
 [package.extras]
 speedups = ["brotlicffi", "brotli", "aiodns"]
+
+[[package]]
+name = "aiologger"
+version = "0.7.0"
+description = "Asynchronous logging for python and asyncio"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+aiofiles = ["aiofiles (==0.4.0)"]
 
 [[package]]
 name = "aioredis"
@@ -95,17 +92,6 @@ docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-
 tests = ["attrs", "zope-interface"]
 tests-mypy = ["mypy (>=1.6)", "pytest-mypy-plugins"]
 tests-no-zope = ["attrs", "cloudpickle", "hypothesis", "pympler", "pytest-xdist", "pytest (>=4.3.0)"]
-
-[[package]]
-name = "caio"
-version = "0.9.13"
-description = "Asynchronous file IO for Linux MacOS or Windows."
-category = "main"
-optional = false
-python-versions = ">=3.7, <4"
-
-[package.extras]
-develop = ["aiomisc-pytest", "pytest", "pytest-cov"]
 
 [[package]]
 name = "datetime"
@@ -237,18 +223,17 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.12"
-content-hash = "5cfda9a44ea2542d49818657af8987c3e1b8ead37edc12063be15a90ffa779ee"
+content-hash = "8cd8d5b4ca959f7e2647ac7cfdc9a4ce5d151ecad6c4cfe38e925ccdc89f1b63"
 
 [metadata.files]
-aiofile = []
 aiofiles = []
 aiohttp = []
+aiologger = []
 aioredis = []
 aiosignal = []
 async-timeout = []
 asyncio = []
 attrs = []
-caio = []
 datetime = []
 faker = []
 frozenlist = []

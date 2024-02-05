@@ -55,7 +55,7 @@ py .\main.py 2
 
  # extra task
   
-  python3 server.py
+  python3 server.py  + min 2 браузера 
 
   
 
