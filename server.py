@@ -2,12 +2,13 @@
 # chmod +x server.py
 
 
-from aiofiles import open as aio_open
 import asyncio
+from aiofiles import open as aio_open
+from aiopath import AsyncPath
+import datetime
 from faker import Faker
 import logging
 import websockets
-from aiopath import AsyncPath
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
 
@@ -15,6 +16,7 @@ from extra import GetExchange
 
 fake = Faker('uk-UA')
 logging.basicConfig(level=logging.INFO)
+
 
 
 class Server:
@@ -34,21 +36,27 @@ class Server:
     async def send_to_clients(self, message: str, sender_ws: WebSocketServerProtocol = None):
         if self.clients:
             [await client.send(message) for client in self.clients if client != sender_ws]
-
+            
     async def ws_handler(self, ws: WebSocketServerProtocol):
         await self.register(ws)
         try:
             await self.distribute(ws)
+            
         except ConnectionClosedOK:
             pass
         finally:
-            await self.unregister(ws)
+            pass
+            # if  ws in self.clients:
+            #     await self.unregister(ws)
+                
+
 
     async def send_exchange_rate(self, name, exchange_data):
         result = await exchange_data.get_exchange()
         if result:
             await self.send_to_clients(f"Exchange rate for: {name}", sender_ws=None)
             await self.send_to_clients(f"{result}", sender_ws=None)
+            
         logging.info(result)
 
     async def distribute(self, ws: WebSocketServerProtocol):
@@ -57,10 +65,29 @@ class Server:
             if message.lstrip().startswith("exchange"):
                 exchange_data = GetExchange(message, ws.name)
                 await exchange_data.send_exchange(ws)
+                msg = f"{ws.name} {message}"
+                logging.info(msg)
+                self.log_message(msg)
             else:
-                await self.send_to_clients(f"{ws.name}: {message}", sender_ws=ws)
+                msg = f"{ws.name}: {message}"
+                await self.send_to_clients(msg, sender_ws=ws)
+                logging.info(msg)
+                self.log_message(msg)
+            
+    # def configure_logging(self):
+    #     logging.basicConfig(
+    #         filename="server_log.txt",
+    #         level=logging.INFO,
+    #         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    #     )
 
+    # def log_message(self, message: str):
+    #     logging.info(message)
 
+    # async def log_message(self, message: str):
+    #     now = datetime.datetime.now()
+    #     async with aio_open(self.log_file, 'a') as f:
+    #         await f.write(f"{now} - {message}\n")
   
 
 async def main():

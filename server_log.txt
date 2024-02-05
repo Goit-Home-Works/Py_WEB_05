@@ -93,4 +93,3 @@ Exchange rates for Давид Вітрук:
     }
   }
 ]
-
