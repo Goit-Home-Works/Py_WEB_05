@@ -69,7 +69,7 @@ class Data_exchange_pb:
     async def print_results(self, results):
         print(json.dumps(results, indent=2))
 
-    async def results_data(self, days_list, currencies):
+    async def results_data(self, days_list):
         data = await self.get_data(days_list)
         results = await self.format_results(data)
         return results
@@ -77,7 +77,7 @@ class Data_exchange_pb:
     async def main(self, days_num, currencies):
         self.CURRENCIES = tuple(currencies.split(','))
         days_list = await self.get_days_list(days_num)
-        results = await self.results_data(days_list, currencies)
+        results = await self.results_data(days_list)
         return results
 
 async def main_print(days_num, currencies):
@@ -88,7 +88,7 @@ async def main_print(days_num, currencies):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Fetch exchange rates for specified days')
     parser.add_argument('days', type=int, help='Number of days to fetch exchange rates')
-    parser.add_argument('--currencies', '-c', default='EUR,USD', help='Comma-separated list of currencies')
+    parser.add_argument('--currencies', '-c', default='EUR,USD',type=str, help='Comma-separated list of currencies')
     args = parser.parse_args()
     days = args.days
     currencies = args.currencies

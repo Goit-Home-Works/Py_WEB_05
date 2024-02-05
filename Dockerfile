@@ -11,8 +11,11 @@ COPY . /app
 RUN pip install poetry
 RUN poetry install
 
-# Make port 8082 available to the world outside this container
-EXPOSE 8082
+# Make port 8081 available to the world outside this container
+
+EXPOSE 8000
+EXPOSE 8081
+
 
 # Define environment variable
 ENV NAME World
