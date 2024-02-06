@@ -35,7 +35,7 @@ class GetExchange:
             if exchange_data:
                 await ws_handler.send(f"Exchange rates for me: ") # {self.name}:\n")
                 await ws_handler.send(json.dumps(exchange_data, indent=2))
-                
+                return exchange_data
         except Exception as e:
             logging.error(f"Error in send_exchange: {e}")
   
